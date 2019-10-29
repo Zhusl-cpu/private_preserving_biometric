@@ -8,20 +8,38 @@
 <body>
     <form>
         <input type="file" id="file-input" name="fileContent">
+        <br>
+	    <lable>ID: </lable>
         <input type="text" id="id-input" name="idContent">
+        <br>
+        <lable>Status: </lable>
+        <input type="radio" name="statusRadio" id="sign_in">sign_in
+        <input type="radio" name="statusRadio" id="sign_up">sign_up
     </form>
     <script type="text/javascript" src="eel.js"></script>
     <script type="text/javascript">
+        let statuses = document.getElementsByName('statusRadio');
+        statuses[0].checked=true;
         $("#file-input").on("change", function() {
             let fileReader = new FileReader();
             let fileType = this.files[0].type;
+            let idbox=document.querySelector("#id-input");
+            let id=0;
+            if(idbox.value!==''){
+                id=idbox.value;
+            }
+            let status=200;
+            if(statuses[0].checked==true){
+                status=200;
+            }else{
+                status=201;
+            }
             fileReader.onload = function() {
             if (/^image/.test(fileType)) {
                 // 读取结果在fileReader.result里面
                 $(`<img src="${this.result}">`).appendTo("body");
                 console.log(this.result);
-                eel.img_to_vector(this.result);
-                //$.post('recongnise',{id:0,photo:this.result},function(data){alert(data)});
+                eel.sendVector(this.result,id,status);
             }
         };
     // 打印原始File对象
