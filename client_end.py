@@ -30,6 +30,7 @@ def sendVector(base64_data, id, status):
     sock.send(msg)
     feedback = sock.recv(1024)
     print(feedback)
+    eel.alert_feedback(feedback)
     sock.close()
 
 
