@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+    <form>
+	    <lable>ID: </lable>
+        <input type="text" id="id-input" name="idContent">
+        <br>
+        <lable>Status: </lable>
+        <input type="radio" name="statusRadio" id="sign_in">sign_in
+        <input type="radio" name="statusRadio" id="sign_up">sign_up
+    </form>
+    <button id="take_photo">take photo</button>
+    <button id="submit">submit</button>
+    <script type="text/javascript" src="eel.js"></script>
+    <script type="text/javascript">
+        let statuses = document.getElementsByName('statusRadio');
+        statuses[0].checked=true;
+        let idbox=document.querySelector("#id-input");
+        let id=0;
+        let take_photo=document.querySelector("#take_photo");
+        take_photo.addEventListener('click',takePhoto,false);
+        let submit=document.querySelector("#submit");
+        submit.addEventListener('click',sendVector2,false);
+        function takePhoto(){
+            console.log('taking photo');
+            eel.takePhoto();
+        }
+        function sendVector2(){
+            id=0;
+            if(idbox.value!==''){
+                id=idbox.value;
+            }
+            let status=200;
+            if(statuses[0].checked===true){
+                status=200;
+            }else{
+                status=201;
+            }
+            console.log('sending msg');
+            eel.sendVector2(id,status);
+        }
+        eel.expose(alert_feedback);
+        function alert_feedback(feedback) {
+            window.alert(feedback);
+        }
+    </script>
+</body>
+</html>
